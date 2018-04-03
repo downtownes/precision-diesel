@@ -1,15 +1,13 @@
 import React from 'react';
+import NavBar from '../NavBar/NavBar';
+import './Home.css';
 
 
 
-export default class Home extends Comonent {
-    render() {
-        return (
-            <div className="Home">
-                <div className="footerContainer">
-                    <div></div>
-                </div>
-            </div>
-        )
-    }
+export default function Home() {
+    return (
+        <div className="Home">
+            <NavBar />
+        </div>
+    )
 }
