@@ -1,0 +1,39 @@
+.profileOptionsContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.profileOptions {
+    width: 15vw;
+    height: 40vh;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 2px 2px 5px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 200px;
+}
+
+button {
+    width: 160px;
+    height: 40px;
+    background-color: #3271BD;
+    border: none;
+    border-radius: 4px;
+    color: white;
+}
+
+p, Link {
+    text-decoration: none;
+}
+
+.nestedRoutesContainer {
+    width: 70vw;
+    height: 70vh;
+    display: flex;
+}

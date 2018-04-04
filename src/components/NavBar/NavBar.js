@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './NavBar.css';
 
 
 
@@ -18,7 +17,9 @@ export default class NavBar extends Component {
                 </div>
                 <div className="cartLoginButtons">
                     <img className="shoppingCartLogo" src={require('../../images/shopping-cart.png')}/>
+                    <a href="http://localhost:3005/auth">
                     <button className="loginButton">Login</button>
+                    </a>
                 </div>
             </div>
         )

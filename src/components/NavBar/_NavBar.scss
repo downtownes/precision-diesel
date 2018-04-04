@@ -1,0 +1,38 @@
+.NavBar {
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  justify-content: space-between; }
+
+.logoContainer {
+  width: 340px; }
+
+.logo {
+  width: 340px;
+  max-height: 15vh; }
+
+.navBarOptions {
+  width: 400px;
+  height: 15vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; }
+
+.cartLoginButtons {
+  width: 340px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; }
+
+.shoppingCartLogo {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px; }
+
+.loginButton {
+  width: 125px;
+  height: 50px;
+  background-color: #3271BD;
+  border-radius: 4px;
+  border: none;
+  margin-right: 20px; }
