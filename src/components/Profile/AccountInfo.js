@@ -20,6 +20,7 @@ class AccountInfo extends Component {
                 {this.state.edit === false ? <h4>{`City: ${this.props.city}`}</h4> : <h4>{`City: ${<input/>}`}</h4>}
                 {this.state.edit === false ? <h4>{`State: ${this.props.stateLived}`}</h4> : <h4>{`State: ${<input/>}`}</h4>}
                 {this.state.edit === false ? <h4>{`Zip Code: ${this.props.zip}`}</h4> : <h4>{`Zip Code: ${<input/>}`}</h4>}
+                <button>Edit Profile</button>
             </div>
         )
     }

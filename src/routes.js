@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';
 import AccountInfo from './components/Profile/AccountInfo';
+import Parts from './components/Parts/Parts';
 
 
 export default (
@@ -11,9 +12,10 @@ export default (
         <Route path="/profile" render={() => (
             <Profile>
                 <Switch>
-                    <Route path="/profile/accountInfo" component={AccountInfo}/>
+                    <Route path="/profile/accountInfo" component={AccountInfo} />
                 </Switch>
             </Profile>
         )} />
+        <Route path="/parts" component={Parts} />
     </Switch>
 )

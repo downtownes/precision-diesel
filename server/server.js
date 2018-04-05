@@ -5,6 +5,7 @@ const express = require('express')
     , Auth0Strategy = require('passport-auth0')
     , massive = require('massive')
     , controller = require('./controller')
+    , bodyParser = require('body-parser')
     , port = 3005;
 
 
@@ -18,6 +19,7 @@ const {
 } = process.env;
 
 const app = express();
+app.use(bodyParser.json())
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db);
 })
@@ -79,7 +81,11 @@ app.get('/auth/logout', (req, res) => {
     res.redirect('http://localhost:3005/');
 })
 
+//----PART ENDPOINTS----//
+app.get('/parts', controller.getParts);
 
+//----ORDER ENDPOINTS----//
+app.post('/order', controller.newOrder)
 
 
 app.listen(port, () => {console.log(`Listening on port: ${port}`)});

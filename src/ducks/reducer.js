@@ -1,4 +1,5 @@
 const initialState = {
+    userId: 0,
     fName: '',
     lName: '',
     phone: '',
@@ -8,7 +9,7 @@ const initialState = {
     zip: 0
 }
 
-
+const USERID = "USERID";
 const FIRSTNAME = "FIRSTNAME";
 const LASTNAME = "LASTNAME";
 const PHONE = "PHONE";
@@ -19,6 +20,8 @@ const ZIP = "ZIP";
 
 export default function(state = initialState, action){
     switch(action.type) {
+        case USERID: 
+            return Object.assign({}, state, {userId: action.payload})
         case FIRSTNAME: 
             return Object.assign({}, state, {fName: action.payload});
         case LASTNAME: 
@@ -35,6 +38,13 @@ export default function(state = initialState, action){
             return Object.assign({}, state, {zip: action.payload})
         default:
             return state;
+    }
+}
+
+export function getUserId(userId) {
+    return {
+        type: USERID,
+        payload: userId
     }
 }
 

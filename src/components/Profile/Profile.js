@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode } from '../../ducks/reducer';
+import { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId } from '../../ducks/reducer';
 import NavBar from '../NavBar/NavBar';
 import AccountInfo from './AccountInfo';
 
@@ -10,46 +10,77 @@ import AccountInfo from './AccountInfo';
 
 
 class Profile extends Component {
+    constructor() {
+        super();
+        this.state = {
+            loggedIn: ''
+        }
+    }
 
     componentDidMount() {
         axios.get('/getUser').then(res => {
             console.log(res.data)
-            this.props.firstName(res.data[0].firstname);
-            this.props.lastName(res.data[0].lastname);
-            this.props.phoneNumber(res.data[0].phone);
-            this.props.location(res.data[0].address);
-            this.props.cityLoc(res.data[0].city);
-            this.props.stateLoc(res.data[0].state);
-            this.props.zipCode(res.data[0].zipcode);
+            if (res.data === 'Please log in or create an account') {
+                this.setState({
+                    loggedIn: false
+                })
+            } else {
+                this.props.getUserId(res.data[0].id);
+                this.props.firstName(res.data[0].firstname);
+                this.props.lastName(res.data[0].lastname);
+                this.props.phoneNumber(res.data[0].phone);
+                this.props.location(res.data[0].address);
+                this.props.cityLoc(res.data[0].city);
+                this.props.stateLoc(res.data[0].state);
+                this.props.zipCode(res.data[0].zipcode);
+                this.setState({
+                    loggedIn: true
+                })
+            }
         })
     }
 
     render() {
-        const { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode } = this.props;
-        return (
-            <div>
-                <NavBar />
-                <div className="profileOptionsContainer">
-                    <div className="profileOptions">
-                        <Link to="/profile/accountInfo"><button>Account Info</button></Link>
-                        <button>Cart</button>
-                        <button>Order History</button>
+        if (this.state.loggedIn === true) {
+            const { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode } = this.props;
+            return (
+                <div>
+                    <NavBar />
+                    <div className="profileOptionsContainer">
+                        <div className="profileOptions">
+                            <Link to="/profile/accountInfo"><button>Account Info</button></Link>
+                            <button>Cart</button>
+                            <button>Order History</button>
+                        </div>
+                        <div className="nestedRoutesContainer">
+                            {this.props.children}
+                        </div>
                     </div>
-                    <div className="nestedRoutesContainer">
-                        {this.props.children}
-                    </div>
+                    <a href="http://localhost:3000/auth/logout">
+                        <button>Logout</button>
+                    </a>
                 </div>
-                <a href="http://localhost:3000/auth/logout">
-                    <button>Logout</button>
-                </a>
-            </div>
-        )
+            )
+        } else if(this.state.loggedIn === false){
+            return (
+                <div>
+                    <NavBar />
+                    <h1>Please create an account or log in!</h1>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <h1>Loading...</h1>
+                </div>
+            )
+        }
     }
 }
 
 
 function mapStateToProps(state) {
-    const { fName, lName, phone, address, city, stateLived, zip } = state;
+    const { fName, lName, phone, address, city, stateLived, zip, userId } = state;
 
     return {
         fName,
@@ -58,7 +89,8 @@ function mapStateToProps(state) {
         address,
         city,
         stateLived,
-        zip
+        zip,
+        userId
     }
 }
-export default connect(mapStateToProps, { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode })(Profile);
+export default connect(mapStateToProps, { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId })(Profile);
