@@ -40,5 +40,11 @@ module.exports = {
         }catch (err) {
             console.log(err);
         }
-    } 
+    },
+    
+    countTotal: (orderId) => {
+        const db = req.app.get('db');
+
+        db.getTotal()
+    }
 }
