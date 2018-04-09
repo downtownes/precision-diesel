@@ -40,6 +40,10 @@ class Profile extends Component {
         })
     }
 
+    resetId(){
+        getUserId(0);
+    }
+
     render() {
         if (this.state.loggedIn === true) {
             const { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode } = this.props;
@@ -57,7 +61,7 @@ class Profile extends Component {
                         </div>
                     </div>
                     <a href="http://localhost:3000/auth/logout">
-                        <button>Logout</button>
+                        <button onClick={() => this.resetId()}>Logout</button>
                     </a>
                 </div>
             )

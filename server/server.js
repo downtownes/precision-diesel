@@ -62,6 +62,7 @@ passport.serializeUser((id, done) => {
     done(null, id);
 })
 passport.deserializeUser((id, done) => {
+    console.log(id, 'deserializerID')
     app.get('db').findSessionUser([id]).then(loggedInUser => {
         done(null, loggedInUser[0]);
     })
@@ -85,7 +86,7 @@ app.get('/auth/logout', (req, res) => {
 app.get('/parts', controller.getParts);
 
 //----ORDER ENDPOINTS----//
-app.post('/order', controller.newOrder)
+app.post('/order', controller.addCart)
 
 
 app.listen(port, () => {console.log(`Listening on port: ${port}`)});
