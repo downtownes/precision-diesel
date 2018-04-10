@@ -1,3 +1,4 @@
+
 module.exports = {
     getUser: (req, res, next) => {
         const db = req.app.get('db');
@@ -25,38 +26,47 @@ module.exports = {
     },
 
     addCart: async (req, res, next) => {
-        console.log(req.session)
         try {
             const db = req.app.get('db');
-            console.log('req.body.id', req.body.id)
+            let priceTotal = [];
+            let orderID;
+            let listOfPrices = [];
 
             order = await db.getOrder(req.body.id)
-            console.log('order', order);
             if (!order[0]) {
                 const newOrder = await db.createOrder(req.body.id);
-                console.log('newOrder', newOrder);
+                orderID = newOrder.orderId;
                 const addToCart = await db.addToCart(newOrder.orderId, newOrder.orderId, req.body.prodId, req.body.qty)
-                const cartTotal = await db.getTotal(newOrder.orderId);
-                console.log('added', req.body.qty)
             } else {
                 const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.qty)
-                const cartTotal = await db.getTotal(order[0].orderid);
-                console.log(cartTotal)
+                orderID = order[0].orderid
             }
+            countTotal = await db.getTotal(orderID);
+            countTotal = await countTotal.map((val, i) => {
+                listOfPrices.push(val.price * val.quantity)
+            })
+            listOfPrices = await listOfPrices.reduce((total, val) => {
+                return parseInt(val + total);
+            })
+            // res.sendStatus(listOfPrices);
         } catch (err) {
             console.log(err);
         }
     },
 
-    // countTotal: async (orderId) => {
-    //     try {
-    //         const db = req.app.get('db');
-    //         console.log(req.session);
+    // countTotal: (orderId) => {
+    //     const db = req.app.get('db');
+    //     let listOfPrices = [];
+    //     console.log(req.session);
 
-    //         cartTotal = await db.getTotal(orderId);
-    //             console.log(cartTotal)
-    //     } catch(err) {
-    //         console.log(err)
-    //     }
+    //     cartTotal = db.getTotal(orderId);
+    //     console.log(cartTotal)
+    //     cartTotal = cartTotal.map((val, i) => {
+    //         listOfPrices.push(val.price * val.quantity)
+    //     })
+    //     listOfPrices.reduce((total, val) => {
+    //         listOfPrices = total + val;
+    //     })
+    //     console.log(listOfPrices);
     // }
 }

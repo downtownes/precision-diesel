@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getUserId } from '../../ducks/reducer';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 
@@ -9,7 +11,8 @@ class Parts extends Component {
         super();
         this.state = {
             parts: [],
-            quantity: 0
+            quantity: 0,
+            total: 0
         }
     }
 
@@ -34,13 +37,19 @@ class Parts extends Component {
             productId: prodid,
             qty: this.state.quantity
         }
-        axios.post('/order', orderInfo);
+        console.log(orderInfo)
+        axios.post('/order', orderInfo).then(res => {
+            console.log(res.data);
+            this.setState({
+                total: res.data
+            })
+        });
     }
 
     render() {
         let displayedParts = this.state.parts.map((val, i) => {
             return (
-                <div >
+                <div key={i}>
                     <img src={val.prodimage} />
                     <p>{val.prodname}</p>
                     <p>{val.price}</p>
@@ -62,5 +71,10 @@ class Parts extends Component {
 
 
 
-
-export default (Parts);
+function mapStateToProps(state) {
+    const { userId } = state;
+    return {
+        userId
+    }
+}
+export default connect(mapStateToProps, {getUserId})(Parts);
