@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getUserId, getOrderId } from '../../ducks/reducer';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 
@@ -9,7 +11,8 @@ class Parts extends Component {
         super();
         this.state = {
             parts: [],
-            quantity: 0
+            quantity: 0,
+            total: 0
         }
     }
 
@@ -22,9 +25,9 @@ class Parts extends Component {
         })
     }
 
-    updateQuantity(qty) {
+    updateQuantity(quant) {
         this.setState({
-            quantity: qty
+            quantity: quant
         })
     }
 
@@ -32,9 +35,11 @@ class Parts extends Component {
         let orderInfo = {
             id: this.props.userId,
             productId: prodid,
-            qty: this.state.quantity
+            quantity: this.state.quantity
         }
-        axios.post('/order', orderInfo);
+        axios.post('/order', orderInfo).then(res => {
+            this.props.getOrderId(res.data.orderID);
+        });
     }
 
     render() {
@@ -62,5 +67,11 @@ class Parts extends Component {
 
 
 
-
-export default (Parts);
+function mapStateToProps(state) {
+    const { userId, orderId } = state;
+    return {
+        userId,
+        orderId
+    }
+}
+export default connect(mapStateToProps, {getUserId, getOrderId})(Parts);

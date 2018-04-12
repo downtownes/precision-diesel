@@ -26,37 +26,56 @@ module.exports = {
 
     addCart: async (req, res, next) => {
         console.log(req.session)
+        let allItems = [];
+        let endTotal = 0;
+        let idObj = {};
         try {
             const db = req.app.get('db');
-            console.log('req.body.id', req.body.id)
 
             order = await db.getOrder(req.body.id)
-            console.log('order', order);
             if (!order[0]) {
                 const newOrder = await db.createOrder(req.body.id);
-                console.log('newOrder', newOrder);
-                const addToCart = await db.addToCart(newOrder.orderId, newOrder.orderId, req.body.prodId, req.body.qty)
+                idObj = await Object.assign({}, newOrder.orderId, {orderID: newOrder.orderId})
+                const addToCart = await db.addToCart(newOrder.orderId, newOrder.orderId, req.body.productId, req.body.quantity)
                 const cartTotal = await db.getTotal(newOrder.orderId);
-                console.log('added', req.body.qty)
+                cartTotal.map( (val, i) => {
+                    allItems.push(val.price * val.quantity)
+                });
+                allItems.reduce( (accum, currVal, i) => {
+                    endTotal +=currVal
+                })
+                updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
             } else {
-                const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.qty)
-                const cartTotal = await db.getTotal(order[0].orderid);
-                console.log(cartTotal)
+                idObj =  await Object.assign({}, order[0].orderid, {orderID: order[0].orderid})
+                const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.quantity)
+                const cartTotal = await db.getTotal(order[0].orderid)
+                cartTotal.map( (val, i) => {
+                    allItems.push(val.price * val.quantity)
+                });
+                allItems.reduce( (accum, currVal, i) => {
+                    endTotal +=currVal
+                })
+                updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
             }
+            res.send(idObj)
         } catch (err) {
             console.log(err);
         }
     },
 
-    // countTotal: async (orderId) => {
-    //     try {
-    //         const db = req.app.get('db');
-    //         console.log(req.session);
+    getOrder: (req, res, next) => {
+        const db = req.app.get('db');
 
-    //         cartTotal = await db.getTotal(orderId);
-    //             console.log(cartTotal)
-    //     } catch(err) {
-    //         console.log(err)
-    //     }
-    // }
+        db.getOrder(req.params.id).then(order => {
+            res.status(200).send(order);
+        })
+    },
+
+    getCartItems: (req, res, next) => {
+        const db = req.app.get('db');
+
+        db.getCart(req.params.id).then(cart => {
+            res.status(200).send(cart)
+        })
+    }
 }

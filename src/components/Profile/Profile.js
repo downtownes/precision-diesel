@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId } from '../../ducks/reducer';
+import { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId, getOrderId } from '../../ducks/reducer';
 import NavBar from '../NavBar/NavBar';
 import AccountInfo from './AccountInfo';
 
@@ -38,6 +38,9 @@ class Profile extends Component {
                 })
             }
         })
+        axios.get(`/getOrder/${this.props.userId}`).then(res => {
+            this.props.getOrderId(res.data.orderID)
+        })
     }
 
     resetId(){
@@ -53,7 +56,7 @@ class Profile extends Component {
                     <div className="profileOptionsContainer">
                         <div className="profileOptions">
                             <Link to="/profile/accountInfo"><button>Account Info</button></Link>
-                            <button>Cart</button>
+                            <Link to="/profile/cart"><button>Cart</button></Link>
                             <button>Order History</button>
                         </div>
                         <div className="nestedRoutesContainer">
@@ -84,7 +87,7 @@ class Profile extends Component {
 
 
 function mapStateToProps(state) {
-    const { fName, lName, phone, address, city, stateLived, zip, userId } = state;
+    const { fName, lName, phone, address, city, stateLived, zip, userId, orderId } = state;
 
     return {
         fName,
@@ -94,7 +97,8 @@ function mapStateToProps(state) {
         city,
         stateLived,
         zip,
-        userId
+        userId,
+        orderId
     }
 }
-export default connect(mapStateToProps, { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId })(Profile);
+export default connect(mapStateToProps, { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId, getOrderId })(Profile);

@@ -86,7 +86,8 @@ app.get('/auth/logout', (req, res) => {
 app.get('/parts', controller.getParts);
 
 //----ORDER ENDPOINTS----//
-app.post('/order', controller.addCart)
-
+app.post('/order', controller.addCart);
+app.get('/order/:id', controller.getOrder);
+app.get('/cart/:id', controller.getCartItems);
 
 app.listen(port, () => {console.log(`Listening on port: ${port}`)});

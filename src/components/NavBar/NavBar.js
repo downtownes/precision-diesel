@@ -20,7 +20,7 @@ export default class NavBar extends Component {
                 </div>
                 <div className="cartLoginButtons">
                     <Link to="/profile"><img className="navBarLogos" src="https://www.freeiconspng.com/uploads/profile-icon-9.png" /></Link>
-                    <img className="navBarLogos" src={require('../../images/shopping-cart.png')} />
+                    <Link to="/profile/cart"><img className="navBarLogos" src={require('../../images/shopping-cart.png')} /></Link>
                     <a href={process.env.REACT_APP_LOGIN}>
                         <button className="loginButton">Login</button>
                     </a>

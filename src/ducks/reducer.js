@@ -6,7 +6,8 @@ const initialState = {
     address: '',
     city: '',
     stateLived: '',
-    zip: 0
+    zip: 0,
+    orderId: 0
 }
 
 const USERID = "USERID";
@@ -17,6 +18,7 @@ const ADDRESS = "ADDRESS";
 const CITY = "CITY";
 const STATE = "STATE";
 const ZIP = "ZIP";
+const ORDERID = "ORDERID";
 
 export default function(state = initialState, action){
     switch(action.type) {
@@ -35,7 +37,9 @@ export default function(state = initialState, action){
         case STATE: 
             return Object.assign({}, state, {stateLived: action.payload});
         case ZIP: 
-            return Object.assign({}, state, {zip: action.payload})
+            return Object.assign({}, state, {zip: action.payload});
+        case ORDERID:
+            return Object.assign({}, state, {orderId: action.payload})
         default:
             return state;
     }
@@ -94,5 +98,12 @@ export function zipCode(zip) {
     return {
         type: ZIP,
         payload: zip
+    }
+}
+
+export function getOrderId (orderId) {
+    return {
+        type: ORDERID,
+        payload: orderId
     }
 }

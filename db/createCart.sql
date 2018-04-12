@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS cart (
+    cartId INTEGER
     orderId INTEGER,
-    prodId INTEGER,
+    productId INTEGER,
     quantity INTEGER
 )
