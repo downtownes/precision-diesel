@@ -86,7 +86,14 @@ app.get('/auth/logout', (req, res) => {
 app.get('/parts', controller.getParts);
 
 //----ORDER ENDPOINTS----//
-app.post('/order', controller.addCart)
+app.post('/order', controller.addCart);
+app.get('/total', controller.countTotal);
+app.get('/getOrder/:id', controller.getOrder, (req, res, next) => {
+    db = req.app.get('db');
+    let listOfPrices = [];
+
+    cartTotal = db.getTotal()
+});
 
 
 app.listen(port, () => {console.log(`Listening on port: ${port}`)});

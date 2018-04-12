@@ -39,10 +39,6 @@ class Parts extends Component {
         }
         console.log(orderInfo)
         axios.post('/order', orderInfo).then(res => {
-            console.log(res.data);
-            this.setState({
-                total: res.data
-            })
         });
     }
 

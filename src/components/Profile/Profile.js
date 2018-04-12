@@ -53,7 +53,7 @@ class Profile extends Component {
                     <div className="profileOptionsContainer">
                         <div className="profileOptions">
                             <Link to="/profile/accountInfo"><button>Account Info</button></Link>
-                            <button>Cart</button>
+                            <Link to="/cart"><button>Cart</button></Link>
                             <button>Order History</button>
                         </div>
                         <div className="nestedRoutesContainer">

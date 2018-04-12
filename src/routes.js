@@ -5,6 +5,7 @@ import Profile from './components/Profile/Profile';
 import AccountInfo from './components/Profile/AccountInfo';
 import Parts from './components/Parts/Parts';
 import Services from './components/Services/Services';
+import Cart from './components/Profile/Cart';
 
 
 export default (
@@ -14,6 +15,7 @@ export default (
             <Profile>
                 <Switch>
                     <Route path="/profile/accountInfo" component={AccountInfo} />
+                    <Route path="/profile/cart" component={Cart} />
                 </Switch>
             </Profile>
         )} />
