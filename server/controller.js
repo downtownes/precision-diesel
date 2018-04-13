@@ -1,17 +1,22 @@
 module.exports = {
     getUser: (req, res, next) => {
         const db = req.app.get('db');
-        console.log(req.user)
+        console.log('passport.user', req.session.passport.user)
         if (!req.session.passport) {
             res.send('Please log in or create an account')
         } else {
 
             db.findSessionUser(req.session.passport.user).then(user => {
+                console.log('user', user)
                 if (user !== undefined) {
+                    if(user[0].orderid === null) {
+                        db.createOrder(req.session.passport.user)
+                    }
                     res.status(200).send(user);
                 } else {
                     res.status(401).send(alert('Please create and account'));
                 }
+
             })
         }
     },
@@ -50,9 +55,11 @@ module.exports = {
                 const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.quantity)
                 const cartTotal = await db.getTotal(order[0].orderid)
                 cartTotal.map( (val, i) => {
+                    console.log('cartTotal', cartTotal)
                     allItems.push(val.price * val.quantity)
                 });
-                allItems.reduce( (accum, currVal, i) => {
+                const reducedItems = await allItems.reduce( (accum, currVal, i) => {
+                    console.log(reducedItems)
                     endTotal +=currVal
                 })
                 updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
@@ -65,8 +72,10 @@ module.exports = {
 
     getOrder: (req, res, next) => {
         const db = req.app.get('db');
+        console.log(req.params.id)
 
         db.getOrder(req.params.id).then(order => {
+            console.log(order);
             res.status(200).send(order);
         })
     },
@@ -74,7 +83,8 @@ module.exports = {
     getCartItems: (req, res, next) => {
         const db = req.app.get('db');
 
-        db.getCart(req.params.id).then(cart => {
+        db.getCartItems(req.params.id).then(cart => {
+            console.log('cart', cart)
             res.status(200).send(cart)
         })
     }

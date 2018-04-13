@@ -6,10 +6,9 @@ class App extends Component {
     return (
       <div className="App">
         {routes}
-        <div className="footerContainer">
-                <div>
+        <div>
+                <div className="footerContainer">
                     <h4>Contact Information</h4>
-                    <hr />
                     <p>Phone: 208*555*1692</p>
                     <p>Email: precisiondiesel@gmail.com</p>
                 </div>

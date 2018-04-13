@@ -48,7 +48,7 @@ passport.use( new Auth0Strategy({
                 profile.name.givenName,
                 profile.name.familyName
             ]).then(createdUser => {
-                console.log('createdUser', createdUser);
+                db.createOrder(createdUser[0].id)
                 return done(null, createdUser[0].id)
             })
         } else {
@@ -64,6 +64,7 @@ passport.serializeUser((id, done) => {
 passport.deserializeUser((id, done) => {
     console.log(id, 'deserializerID')
     app.get('db').findSessionUser([id]).then(loggedInUser => {
+        console.log('loggedInUser',loggedInUser)
         done(null, loggedInUser[0]);
     })
 })

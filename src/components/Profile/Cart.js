@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 
 
 class Cart extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             cart: []
         }
     }
     componentDidMount() {
-        axios.get(`/getCart/${this.props.orderId}`).then(res => {
+        axios.get(`/cart/${this.props.orderId}`).then(res => {
+            console.log(res.data)
             this.setState({
                 cart: res.data
             })
@@ -20,12 +21,14 @@ class Cart extends Component {
     }
     render() {
         return (
-            <div>
-                <div className="itemContainer">
-                    <img />
-                    <h4>--Product Name--</h4>
-                    <h4>Qty:</h4>
-                    <h4>Total:</h4>
+            <div className="Cart">
+                <div className="cartItems">
+                    <div className="itemContainer">
+                        <img />
+                        <h4>--Product Name--</h4>
+                        <h4>Qty:</h4>
+                        <h4>Price:</h4>
+                    </div>
                 </div>
             </div>
         )
@@ -38,4 +41,4 @@ function mapStateToProps(state) {
         orderId
     }
 }
-export default (Cart);
+export default connect(mapStateToProps)(Cart);

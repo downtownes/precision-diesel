@@ -36,14 +36,17 @@ class Profile extends Component {
                 this.setState({
                     loggedIn: true
                 })
+                if (this.state.loggedIn === true) {
+                    axios.get(`/order/${this.props.userId}`).then(res => {
+                        console.log(res.data)
+                        this.props.getOrderId(res.data[0].orderid)
+                    })
+                }
             }
-        })
-        axios.get(`/getOrder/${this.props.userId}`).then(res => {
-            this.props.getOrderId(res.data.orderID)
         })
     }
 
-    resetId(){
+    resetId() {
         getUserId(0);
     }
 
@@ -54,13 +57,15 @@ class Profile extends Component {
                 <div>
                     <NavBar />
                     <div className="profileOptionsContainer">
-                        <div className="profileOptions">
-                            <Link to="/profile/accountInfo"><button>Account Info</button></Link>
-                            <Link to="/profile/cart"><button>Cart</button></Link>
-                            <button>Order History</button>
-                        </div>
-                        <div className="nestedRoutesContainer">
-                            {this.props.children}
+                        <div className="profileOptionsAndInfoContainer">
+                            <div className="profileOptions">
+                                <Link to="/profile/accountInfo"><button>Account Info</button></Link>
+                                <Link to="/profile/cart"><button>Cart</button></Link>
+                                <button>Order History</button>
+                            </div>
+                            <div className="nestedRoutesContainer">
+                                {this.props.children}
+                            </div>
                         </div>
                     </div>
                     <a href="http://localhost:3000/auth/logout">
@@ -68,7 +73,7 @@ class Profile extends Component {
                     </a>
                 </div>
             )
-        } else if(this.state.loggedIn === false){
+        } else if (this.state.loggedIn === false) {
             return (
                 <div>
                     <NavBar />
