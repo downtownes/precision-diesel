@@ -20,15 +20,21 @@ class Cart extends Component {
         })
     }
     render() {
-        return (
-            <div className="Cart">
-                <div className="cartItems">
-                    <div className="itemContainer">
+        let cartItemCards = this.state.cart.map( (val, i) => {
+            return (
+                <div key={i} className="itemContainer">
+                        <button className="deleteButton">X</button>
                         <img />
                         <h4>--Product Name--</h4>
                         <h4>Qty:</h4>
                         <h4>Price:</h4>
                     </div>
+            )
+        })
+        return (
+            <div className="Cart">
+                <div className="cartItems">
+                    
                 </div>
             </div>
         )

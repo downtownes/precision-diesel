@@ -1,7 +1,6 @@
 module.exports = {
     getUser: (req, res, next) => {
         const db = req.app.get('db');
-        console.log('passport.user', req.session.passport.user)
         if (!req.session.passport) {
             res.send('Please log in or create an account')
         } else {
