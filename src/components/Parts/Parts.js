@@ -45,7 +45,7 @@ class Parts extends Component {
     render() {
         let displayedParts = this.state.parts.map((val, i) => {
             return (
-                <div >
+                <div key={i}>
                     <img src={val.prodimage} />
                     <p>{val.prodname}</p>
                     <p>{val.price}</p>
