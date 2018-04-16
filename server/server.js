@@ -90,5 +90,6 @@ app.get('/parts', controller.getParts);
 app.post('/order', controller.addCart);
 app.get('/order/:id', controller.getOrder);
 app.get('/cart/:id', controller.getCartItems);
+app.post('/cartItem', controller.deleteFromCart);
 
 app.listen(port, () => {console.log(`Listening on port: ${port}`)});

@@ -7,7 +7,7 @@ import NavBar from '../NavBar/NavBar';
 export default function Home() {
     return (
         <div className="Home">
-            <NavBar />
+            
         </div>
     )
 }

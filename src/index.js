@@ -5,6 +5,7 @@ import App from './App';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './ducks/store';
+import 'semantic-ui-css/semantic.min.css';
 // import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(

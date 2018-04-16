@@ -41,27 +41,30 @@ module.exports = {
                 const newOrder = await db.createOrder(req.body.id);
                 idObj = await Object.assign({}, newOrder.orderId, {orderID: newOrder.orderId})
                 const addToCart = await db.addToCart(newOrder.orderId, newOrder.orderId, req.body.productId, req.body.quantity)
-                const cartTotal = await db.getTotal(newOrder.orderId);
-                cartTotal.map( (val, i) => {
-                    allItems.push(val.price * val.quantity)
-                });
-                allItems.reduce( (accum, currVal, i) => {
-                    endTotal +=currVal
-                })
-                updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
+                // const cartTotal = await db.getTotal(newOrder.orderId);
+                // console.log('cartTotal', cartTotal);
+                // const getTotal = await cartTotal.map( (val, i) => {
+                //     allItems.push(val.price * val.quantity)
+                //     console.log(allItems);
+                //     allItems.reduce( (accum, currVal, i) => {
+                //         endTotal +=currVal
+                //     })
+                // });
+                // console.log(getTotal);
+                // updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
             } else {
                 idObj =  await Object.assign({}, order[0].orderid, {orderID: order[0].orderid})
                 const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.quantity)
-                const cartTotal = await db.getTotal(order[0].orderid)
-                cartTotal.map( (val, i) => {
-                    console.log('cartTotal', cartTotal)
-                    allItems.push(val.price * val.quantity)
-                });
-                const reducedItems = await allItems.reduce( (accum, currVal, i) => {
-                    console.log(reducedItems)
-                    endTotal +=currVal
-                })
-                updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
+                // const cartTotal = await db.getTotal(order[0].orderid)
+                // cartTotal.map( (val, i) => {
+                //     console.log('cartTotal', cartTotal)
+                //     allItems.push(val.price * val.quantity)
+                //     allItems.reduce( (accum, currVal, i) => {
+                //         endTotal +=currVal
+                //     })
+                // });
+                
+                // updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
             }
             res.send(idObj)
         } catch (err) {
@@ -81,10 +84,24 @@ module.exports = {
 
     getCartItems: (req, res, next) => {
         const db = req.app.get('db');
+        let cartTotal = 0;
 
         db.getCartItems(req.params.id).then(cart => {
-            console.log('cart', cart)
-            res.status(200).send(cart)
+            cart.map( (val, i) => {
+                let priceInNum = parseInt(val.price);
+                console.log(priceInNum);
+                return cartTotal += priceInNum
+            })
+            res.status(200).send([cart, cartTotal])
+        })
+    },
+
+    deleteFromCart: (req, res, next) => {
+        const db = req.app.get('db');
+        console.log(req.body);
+
+        db.deleteFromCart([req.body.prodid, req.body.ordid]).then(newList => {
+            res.status(200).send(newList);
         })
     }
 }

@@ -56,7 +56,7 @@ class Parts extends Component {
         })
         return (
             <div className="Parts">
-                <NavBar />
+                {/* <NavBar /> */}
                 {displayedParts}
             </div>
         )

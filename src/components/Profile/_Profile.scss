@@ -1,3 +1,9 @@
+.Profile {
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+
 .profileOptionsContainer {
     width: 100;
     height: 100vh;
@@ -36,10 +42,12 @@ button {
     border-radius: 4px;
     color: black;
     font-weight: 600;
+    margin: 10px 0 10px 0;
 }
 
-p, Link {
+p, Link, a {
     text-decoration: none;
+    color: black;
 }
 
 .nestedRoutesContainer {
@@ -55,31 +63,65 @@ p, Link {
 
 .cartItems {
     width: 100%;
-    height: 100%;
+    height: 65vh;
     overflow: scroll;
-    overflow-y: hidden;
     overflow-x: hidden;
-    display: flex;
     justify-content: space-around;
     padding-top: 10px;
     padding-bottom: 10px;
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px 0px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .itemContainer {
-    width: 98%;
-    height: 100px;
+    width: 96%;
+    min-height: 100px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border: none;
     box-shadow: 0px 0px 5px 0px #C6D1CC;
+    margin: 10px 0 10px 0;
+}
+
+.cartCardImage {
+    max-width: 85px;
+    max-height: 92px;
+    border: 1px solid #3271BD;
+}
+
+.cartCardPriceDisplay {
+    margin-right: 10px;
 }
 
 .deleteButton {
     width: 25px;
     height: 25px;
-    background-color: red;
-    color: black;
+    background-color: white;
+    font-size: 16px;
+    color: #3271BD;
+    margin-left: 10px;
+}
+
+.deleteButton:hover {
+    color: red;
+}
+
+div.ui.grid {
+    margin: auto;
+}
+
+.totalPrice {
+    float: right;
+    margin: 20px;
+    border: black;
+    border-radius: 5px;
+}
+
+.checkoutButton {
+    width: 200px;
+    height: 60px;
+    float: right;
+    margin-right: 20px;
 }

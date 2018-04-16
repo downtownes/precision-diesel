@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId, getOrderId } from '../../ducks/reducer';
 import NavBar from '../NavBar/NavBar';
 import AccountInfo from './AccountInfo';
+import TestProfileComponent from './TestProfileComponent';
 
 
 
@@ -13,7 +14,7 @@ class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            loggedIn: ''
+            loggedIn: true
         }
     }
 
@@ -54,9 +55,8 @@ class Profile extends Component {
         if (this.state.loggedIn === true) {
             const { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode } = this.props;
             return (
-                <div>
-                    <NavBar />
-                    <div className="profileOptionsContainer">
+                <div className="Profile">
+                    {/* <div className="profileOptionsContainer">
                         <div className="profileOptionsAndInfoContainer">
                             <div className="profileOptions">
                                 <Link to="/profile/accountInfo"><button>Account Info</button></Link>
@@ -67,7 +67,8 @@ class Profile extends Component {
                                 {this.props.children}
                             </div>
                         </div>
-                    </div>
+                    </div> */}
+                    <TestProfileComponent/>
                     <a href="http://localhost:3000/auth/logout">
                         <button onClick={() => this.resetId()}>Logout</button>
                     </a>
@@ -76,7 +77,6 @@ class Profile extends Component {
         } else if (this.state.loggedIn === false) {
             return (
                 <div>
-                    <NavBar />
                     <h1>Please create an account or log in!</h1>
                 </div>
             )
