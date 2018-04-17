@@ -7,7 +7,8 @@ const initialState = {
     city: '',
     stateLived: '',
     zip: 0,
-    orderId: 0
+    orderId: 0,
+    totalInCents: 0
 }
 
 const USERID = "USERID";
@@ -19,6 +20,7 @@ const CITY = "CITY";
 const STATE = "STATE";
 const ZIP = "ZIP";
 const ORDERID = "ORDERID";
+const TOTALINCENTS = "TOTALINCENTS"
 
 export default function(state = initialState, action){
     switch(action.type) {
@@ -39,7 +41,9 @@ export default function(state = initialState, action){
         case ZIP: 
             return Object.assign({}, state, {zip: action.payload});
         case ORDERID:
-            return Object.assign({}, state, {orderId: action.payload})
+            return Object.assign({}, state, {orderId: action.payload});
+        case TOTALINCENTS:
+            return Object.assign({}, state, {totalInCents: action.payload})
         default:
             return state;
     }
@@ -105,5 +109,12 @@ export function getOrderId (orderId) {
     return {
         type: ORDERID,
         payload: orderId
+    }
+}
+
+export function getTotalPennies(totalInCents) {
+    return {
+        type: TOTALINCENTS,
+        payload: totalInCents
     }
 }

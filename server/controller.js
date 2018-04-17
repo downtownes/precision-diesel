@@ -41,30 +41,9 @@ module.exports = {
                 const newOrder = await db.createOrder(req.body.id);
                 idObj = await Object.assign({}, newOrder.orderId, {orderID: newOrder.orderId})
                 const addToCart = await db.addToCart(newOrder.orderId, newOrder.orderId, req.body.productId, req.body.quantity)
-                // const cartTotal = await db.getTotal(newOrder.orderId);
-                // console.log('cartTotal', cartTotal);
-                // const getTotal = await cartTotal.map( (val, i) => {
-                //     allItems.push(val.price * val.quantity)
-                //     console.log(allItems);
-                //     allItems.reduce( (accum, currVal, i) => {
-                //         endTotal +=currVal
-                //     })
-                // });
-                // console.log(getTotal);
-                // updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
             } else {
                 idObj =  await Object.assign({}, order[0].orderid, {orderID: order[0].orderid})
                 const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.quantity)
-                // const cartTotal = await db.getTotal(order[0].orderid)
-                // cartTotal.map( (val, i) => {
-                //     console.log('cartTotal', cartTotal)
-                //     allItems.push(val.price * val.quantity)
-                //     allItems.reduce( (accum, currVal, i) => {
-                //         endTotal +=currVal
-                //     })
-                // });
-                
-                // updatedTotalColumn = await db.updateTotal(req.body.id, endTotal)
             }
             res.send(idObj)
         } catch (err) {
@@ -88,7 +67,8 @@ module.exports = {
 
         db.getCartItems(req.params.id).then(cart => {
             cart.map( (val, i) => {
-                let priceInNum = parseInt(val.price);
+                console.log('val.price', val.price)
+                let priceInNum = parseFloat(val.price);
                 console.log(priceInNum);
                 return cartTotal += priceInNum
             })
@@ -103,5 +83,27 @@ module.exports = {
         db.deleteFromCart([req.body.prodid, req.body.ordid]).then(newList => {
             res.status(200).send(newList);
         })
+    },
+
+    updateTotal: (req, res, next) => {
+        const db = req.app.get('db');
+
+        db.updateTotal([req.body.orderid, req.body.total]).then(updatedTotal => {
+            res.status(200).send(updatedTotal);
+        })
+    },
+
+    createPayment: (req, res, next) => {
+        console.log('tokenBodyObj', req.body)
+        const charge = stripe.charges.create({
+            amount: req.body.amount, // amount in cents, again
+            currency: 'usd',
+            source: req.body.token.id,
+            description: 'Test charge from react app'
+          }, function(err, charge) {
+              if (err) return res.sendStatus(500)
+              return res.sendStatus(200);
+          });
+          
     }
 }

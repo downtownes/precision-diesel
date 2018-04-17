@@ -1,3 +1,3 @@
 UPDATE orders
 SET total = $2
-WHERE id = $1;
+WHERE orderid = $1 AND status = true;

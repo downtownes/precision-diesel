@@ -6,6 +6,7 @@ const express = require('express')
     , massive = require('massive')
     , controller = require('./controller')
     , bodyParser = require('body-parser')
+    , stripe = require('stripe')(process.env.SECRET_KEY)
     , port = 3005;
 
 
@@ -69,6 +70,13 @@ passport.deserializeUser((id, done) => {
     })
 })
 
+
+//----STRIPE SETUP POINT----//
+app.post('/saveToken', controller.createPayment);
+
+
+
+
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
     successRedirect: 'http://localhost:3000/#/profile',
@@ -91,5 +99,6 @@ app.post('/order', controller.addCart);
 app.get('/order/:id', controller.getOrder);
 app.get('/cart/:id', controller.getCartItems);
 app.post('/cartItem', controller.deleteFromCart);
+app.patch('/total', controller.updateTotal);
 
 app.listen(port, () => {console.log(`Listening on port: ${port}`)});

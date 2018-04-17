@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Checkout from '../Checkout/Checkout';
+import { getTotalPennies } from '../../ducks/reducer';
 
 
 
@@ -15,9 +17,16 @@ class Cart extends Component {
     componentDidMount() {
         axios.get(`/cart/${this.props.orderId}`).then(res => {
             console.log(res.data)
+            let cartTotalObj = {
+                total: res.data[1],
+                orderid: this.props.orderId
+            };
             this.setState({
                 cart: res.data[0],
                 cartTotal: res.data[1]
+            })
+            getTotalPennies(res.data[1] * 100);
+            axios.patch('/total', cartTotalObj).then(res => {
             })
         })
     }
@@ -56,8 +65,9 @@ class Cart extends Component {
                     {cartItemCards}
                 </div>
                 <div>
-                    <h2 className="totalPrice">{`$${this.state.cartTotal}.00`}</h2>
+                    <h2 className="totalPrice">{`$${this.state.cartTotal}`}</h2>
                     <button className="checkoutButton">Checkout</button>
+                    <Checkout/>
                 </div>
             </div>
         )
@@ -65,9 +75,10 @@ class Cart extends Component {
 }
 
 function mapStateToProps(state) {
-    const { orderId } = state;
+    const { orderId, totalInCents } = state;
     return {
-        orderId
+        orderId,
+        totalInCents
     }
 }
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, { getTotalPennies })(Cart);

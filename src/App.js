@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import routes from './routes';
-import NavBar from './components/NavBar/NavBar';
+import NavBar3 from './components/NavBar/NavBar2';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-      <NavBar />
+      <NavBar3 />
         {routes}
         <div>
                 <div className="footerContainer">
