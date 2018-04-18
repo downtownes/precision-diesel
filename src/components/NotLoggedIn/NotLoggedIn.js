@@ -1,19 +1,14 @@
 import React from 'react'
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
-const ModalBasicExample = () => (
-  <Modal trigger={<Button>Basic Modal</Button>} basic size='small'>
-    <Header icon='archive' content='Archive Old Messages' />
-    <Modal.Content>
-      <p>Please create an account or log in to add products to cart.</p>
-    </Modal.Content>
-    <Modal.Actions>
-      <Button basic color='red' inverted>
-        <Icon name='remove' /> No
-      </Button>
-      <Button color='green' inverted>
-        <Icon name='checkmark' /> Yes
-      </Button>
-    </Modal.Actions>
-  </Modal>
+const NotLoggedIn = () => (
+  <Message warning>
+    <Message.Header>Please create an account or log in!</Message.Header>
+    <a href={process.env.REACT_APP_LOGIN}>
+    <button style={{marginTop: 20, color: 'white'}}>Register/Login</button>
+    </a>
+  </Message>
 )
+
+export default NotLoggedIn

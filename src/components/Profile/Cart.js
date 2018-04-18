@@ -25,7 +25,7 @@ class Cart extends Component {
                 cart: res.data[0],
                 cartTotal: res.data[1]
             })
-            getTotalPennies(res.data[1] * 100);
+            this.props.getTotalPennies(res.data[1] * 100);
             axios.patch('/total', cartTotalObj).then(res => {
             })
         })

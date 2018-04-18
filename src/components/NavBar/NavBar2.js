@@ -32,7 +32,7 @@ class NavBar3 extends Component {
 
           <Menu.Item>
             <a href={process.env.REACT_APP_LOGIN}>
-              <Button primary>{this.props.userId === 0 ? 'Login' : 'Logout'}</Button>
+              <Button primary>Login</Button>
             </a>
           </Menu.Item>
         </Menu.Menu>

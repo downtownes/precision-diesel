@@ -11,15 +11,17 @@ class TakeMoney extends Component {
         }
     }
     onToken = (token) => {
+        let {userId, orderId} = this.props;
         token.card = void 0;
-        axios.post('/saveToken', { token, amount: this.props.totalInCents }).then(data => {
-            alert(`We are in business, ${this.props.fname}`);
+        axios.post('/saveToken', { token, amount: this.props.totalInCents, userId, orderId }).then(data => {
+            alert(`We are in business, ${this.props.firstname}`);
         });
     }
 
     // ...
 
     render() {
+        console.log(this.state.totalInCents);
         return (
             // ...
             <StripeCheckout
@@ -36,10 +38,12 @@ class TakeMoney extends Component {
 }
 
 function mapStateToProps(state) {
-    const { totalInCents } = state;
+    const { totalInCents, userId, orderId } = state;
 
     return {
-        totalInCents
+        totalInCents,
+        userId,
+        orderId
     }
 }
 export default connect(mapStateToProps)(TakeMoney)

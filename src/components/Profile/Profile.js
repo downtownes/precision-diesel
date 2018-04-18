@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId, getOrderId } from '../../ducks/reducer';
+import { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId, getOrderId, loggedUser } from '../../ducks/reducer';
 import NavBar from '../NavBar/NavBar';
 import AccountInfo from './AccountInfo';
 import TestProfileComponent from './TestProfileComponent';
@@ -13,18 +13,16 @@ import TestProfileComponent from './TestProfileComponent';
 class Profile extends Component {
     constructor() {
         super();
-        this.state = {
-            loggedIn: ''
-        }
     }
 
     componentDidMount() {
         axios.get('/getUser').then(res => {
             console.log(res.data)
             if (res.data === 'Please log in or create an account') {
-                this.setState({
-                    loggedIn: false
-                })
+                this.props.loggedUser(false);
+                // this.setState({
+                //     loggedIn: false
+                // })
             } else {
                 this.props.getUserId(res.data[0].id);
                 this.props.firstName(res.data[0].firstname);
@@ -34,10 +32,11 @@ class Profile extends Component {
                 this.props.cityLoc(res.data[0].city);
                 this.props.stateLoc(res.data[0].state);
                 this.props.zipCode(res.data[0].zipcode);
-                this.setState({
-                    loggedIn: true
-                })
-                if (this.state.loggedIn === true) {
+                this.props.loggedUser(true);
+                // this.setState({
+                //     loggedIn: true
+                // })
+                if (this.props.loggedIn === true) {
                     axios.get(`/order/${this.props.userId}`).then(res => {
                         console.log(res.data)
                         this.props.getOrderId(res.data[0].orderid)
@@ -52,7 +51,7 @@ class Profile extends Component {
     }
 
     render() {
-        if (this.state.loggedIn === true) {
+        if (this.props.loggedIn === true) {
             const { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode } = this.props;
             return (
                 <div className="Profile">
@@ -62,7 +61,7 @@ class Profile extends Component {
                     </a>
                 </div>
             )
-        } else if (this.state.loggedIn === false) {
+        } else if (this.props.loggedIn === false) {
             return (
                 <div>
                     <h1>Please create an account or log in!</h1>
@@ -80,7 +79,7 @@ class Profile extends Component {
 
 
 function mapStateToProps(state) {
-    const { fName, lName, phone, address, city, stateLived, zip, userId, orderId } = state;
+    const { fName, lName, phone, address, city, stateLived, zip, userId, orderId, loggedIn } = state;
 
     return {
         fName,
@@ -91,7 +90,8 @@ function mapStateToProps(state) {
         stateLived,
         zip,
         userId,
-        orderId
+        orderId,
+        loggedIn
     }
 }
-export default connect(mapStateToProps, { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId, getOrderId })(Profile);
+export default connect(mapStateToProps, { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode, getUserId, getOrderId, loggedUser })(Profile);
