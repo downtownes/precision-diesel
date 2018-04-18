@@ -14,6 +14,7 @@ class Parts extends Component {
             quantity: 0,
             total: 0
         }
+        this.updateQuantity = this.updateQuantity.bind(this);
     }
 
     componentDidMount() {
@@ -32,6 +33,11 @@ class Parts extends Component {
     }
 
     addToCart(prodid) {
+        axios.get('/getUser').then(res => {
+            if (res.data === 'Please log in or create an account') {
+                
+            }
+        })
         let orderInfo = {
             id: this.props.userId,
             productId: prodid,
@@ -39,6 +45,7 @@ class Parts extends Component {
         }
         axios.post('/order', orderInfo).then(res => {
             this.props.getOrderId(res.data.orderID);
+            this.updateQuantity(0);
         });
     }
 
@@ -49,7 +56,7 @@ class Parts extends Component {
                     <img src={val.prodimage} />
                     <p>{val.prodname}</p>
                     <p>{val.price}</p>
-                    <input id="number" type="number" onChange={ e => this.updateQuantity(e.target.value)}/>
+                    <input id="number" type="number" placeholder="0" onChange={ e => this.updateQuantity(e.target.value)}/>
                     <button onClick={() => this.addToCart(val.productid)}>Add To Cart</button>
                 </div>
             )

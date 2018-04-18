@@ -11,12 +11,9 @@ class TakeMoney extends Component {
         }
     }
     onToken = (token) => {
-        let tokenObj = {
-            key: token,
-            totalInCents: this.state.totalInCents
-        }
-        axios.post('/saveToken', { tokenObj }).then(data => {
-            alert(`TWe are in business, ${this.props.fname}`);
+        token.card = void 0;
+        axios.post('/saveToken', { token, amount: this.props.totalInCents }).then(data => {
+            alert(`We are in business, ${this.props.fname}`);
         });
     }
 
@@ -27,9 +24,13 @@ class TakeMoney extends Component {
             // ...
             <StripeCheckout
                 token={this.onToken}
-                stripeKey={process.env.SECRET_KEY}
+                stripeKey={process.env.REACT_APP_STRIPE_KEY}
                 amount={this.props.totalInCents}
-            />
+                panelLabel="Checkout"
+            >
+            <button className="checkoutButton">Checkout</button>
+            </StripeCheckout>
+            
         )
     }
 }

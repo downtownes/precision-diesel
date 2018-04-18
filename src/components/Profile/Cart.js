@@ -66,7 +66,7 @@ class Cart extends Component {
                 </div>
                 <div>
                     <h2 className="totalPrice">{`$${this.state.cartTotal}`}</h2>
-                    <button className="checkoutButton">Checkout</button>
+                    {/* <button className="checkoutButton">Checkout</button> */}
                     <Checkout/>
                 </div>
             </div>

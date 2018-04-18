@@ -56,18 +56,6 @@ class Profile extends Component {
             const { firstName, lastName, phoneNumber, location, cityLoc, stateLoc, zipCode } = this.props;
             return (
                 <div className="Profile">
-                    {/* <div className="profileOptionsContainer">
-                        <div className="profileOptionsAndInfoContainer">
-                            <div className="profileOptions">
-                                <Link to="/profile/accountInfo"><button>Account Info</button></Link>
-                                <Link to="/profile/cart"><button>Cart</button></Link>
-                                <button>Order History</button>
-                            </div>
-                            <div className="nestedRoutesContainer">
-                                {this.props.children}
-                            </div>
-                        </div>
-                    </div> */}
                     <TestProfileComponent/>
                     <a href="http://localhost:3000/auth/logout">
                         <button onClick={() => this.resetId()}>Logout</button>

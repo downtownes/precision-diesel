@@ -4,7 +4,7 @@ import Cart from './Cart';
 // import './Profile/Pro'
 
 
-export default class TestProfileComponent extends Component{
+export default class NewProfile extends Component{
     constructor() {
         super();
         this.state = {

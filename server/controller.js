@@ -1,3 +1,6 @@
+require('dotenv').config();
+let stripe = require('stripe')(process.env.S_STRIPE_KEY);
+
 module.exports = {
     getUser: (req, res, next) => {
         const db = req.app.get('db');
@@ -94,13 +97,13 @@ module.exports = {
     },
 
     createPayment: (req, res, next) => {
-        console.log('tokenBodyObj', req.body)
         const charge = stripe.charges.create({
             amount: req.body.amount, // amount in cents, again
             currency: 'usd',
             source: req.body.token.id,
             description: 'Test charge from react app'
           }, function(err, charge) {
+              console.log(err);
               if (err) return res.sendStatus(500)
               return res.sendStatus(200);
           });
