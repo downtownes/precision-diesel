@@ -1,4 +1,19 @@
 .Parts {
     width: 100%;
     height: 100vh;
+    display: flex;
+    justify-content: space-around;
+}
+
+.cardContainer {
+    width: 96%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+div.ui.card {
+    max-height: 400px;
+    box-sizing: content-box;
+    margin-top: 0;
 }

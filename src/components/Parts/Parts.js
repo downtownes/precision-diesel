@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUserId, getOrderId, loggedUser } from '../../ducks/reducer';
+import { Card, Icon, Image, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import NotLoggedIn from '../NotLoggedIn/NotLoggedIn';
@@ -54,20 +55,38 @@ class Parts extends Component {
     render() {
         let displayedParts = this.state.parts.map((val, i) => {
             return (
-                <div key={i}>
-                    <img src={val.prodimage} />
-                    <p>{val.prodname}</p>
-                    <p>{val.price}</p>
-                    <input id="number" type="number" placeholder="0" onChange={e => this.updateQuantity(e.target.value)} />
-                    <button onClick={() => this.addToCart(val.productid)}>Add To Cart</button>
-                </div>
+                <Card key={i}>
+                <Image verticalAlign="middle" src={val.prodimage} />
+                <Card.Content >
+                <Card.Header>
+                    {val.prodname}
+                </Card.Header>
+                <Card.Meta>
+                    <span className='date'>
+                    {val.prod}
+                    </span>
+                </Card.Meta>
+                <Card.Description>
+                    {val.proddesc}
+                </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                {/* <a>
+                    <Icon name='user' />
+                    22 Friends
+                </a> */}
+                    <button style={{color: 'white'}}onClick={() => this.addToCart(val.productid)}>Add To Cart</button>
+                </Card.Content>
+            </Card>
             )
         })
         if (this.props.loggedIn === '' || this.props.loggedIn === true) {
             return (
                 <div className="Parts">
                     {/* <NavBar /> */}
+                    <div className="cardContainer">
                     {displayedParts}
+                    </div>
                 </div>
             )
         } else if(this.props.loggedIn === false) {
