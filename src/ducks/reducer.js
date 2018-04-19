@@ -9,7 +9,9 @@ const initialState = {
     zip: 0,
     orderId: 0,
     totalInCents: 0,
-    loggedIn: ''
+    loggedIn: '',
+    cart: [],
+    total: 0
 }
 
 const USERID = "USERID";
@@ -21,8 +23,10 @@ const CITY = "CITY";
 const STATE = "STATE";
 const ZIP = "ZIP";
 const ORDERID = "ORDERID";
-const TOTALINCENTS = "TOTALINCENTS"
-const LOGGEDIN = "LOGGEDIN"
+const TOTALINCENTS = "TOTALINCENTS";
+const LOGGEDIN = "LOGGEDIN";
+const CART = "CART";
+const CARTTOTAL = "CARTTOTAL"
 
 export default function(state = initialState, action){
     switch(action.type) {
@@ -48,6 +52,10 @@ export default function(state = initialState, action){
             return Object.assign({}, state, {totalInCents: action.payload});
         case LOGGEDIN: 
             return Object.assign({}, state, {loggedIn: action.payload});
+        case CART: 
+            return Object.assign({}, state, {cart: action.payload});
+        case CARTTOTAL: 
+            return Object.assign({}, state, {total: action.payload})
         default:
             return state;
     }
@@ -127,5 +135,19 @@ export function loggedUser(loggedIn) {
     return {
         type: LOGGEDIN,
         payload: loggedIn
+    }
+}
+
+export function getCart(cart) {
+    return {
+        type: CART,
+        payload: cart
+    }
+}
+
+export function updateCartTotal(total) {
+    return {
+        type: CARTTOTAL,
+        payload: total
     }
 }

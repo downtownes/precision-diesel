@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { getCart, updateCartTotal } from '../../ducks/reducer';
 
 class TakeMoney extends Component {
     constructor(props){
@@ -13,15 +14,17 @@ class TakeMoney extends Component {
     onToken = (token) => {
         let {userId, orderId} = this.props;
         token.card = void 0;
-        axios.post('/saveToken', { token, amount: this.props.totalInCents, userId, orderId }).then(data => {
+        axios.post('/saveToken', { token, amount: this.props.totalInCents, userId, orderId }).then(res => {
+            console.log(res.data);
             alert(`We are in business, ${this.props.firstname}`);
+            this.props.getCart([]);
+            this.props.updateCartTotal(0);
         });
     }
 
     // ...
 
     render() {
-        console.log(this.state.totalInCents);
         return (
             // ...
             <StripeCheckout
@@ -38,12 +41,13 @@ class TakeMoney extends Component {
 }
 
 function mapStateToProps(state) {
-    const { totalInCents, userId, orderId } = state;
+    const { totalInCents, userId, orderId, cart } = state;
 
     return {
         totalInCents,
         userId,
-        orderId
+        orderId,
+        cart
     }
 }
-export default connect(mapStateToProps)(TakeMoney)
+export default connect(mapStateToProps, { getCart, updateCartTotal })(TakeMoney)

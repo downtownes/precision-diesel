@@ -32,7 +32,7 @@ module.exports = {
     },
 
     addCart: async (req, res, next) => {
-        console.log(req.session)
+        console.log('req.body',  req.body)
         let allItems = [];
         let endTotal = 0;
         let idObj = {};
@@ -42,8 +42,10 @@ module.exports = {
             order = await db.getOrder(req.body.id)
             if (!order[0]) {
                 const newOrder = await db.createOrder(req.body.id);
-                idObj = await Object.assign({}, newOrder.orderId, { orderID: newOrder.orderId })
-                const addToCart = await db.addToCart(newOrder.orderId, newOrder.orderId, req.body.productId, req.body.quantity)
+                console.log('newOrder', newOrder)
+                idObj = await Object.assign({}, newOrder[0].orderid, { orderID: newOrder[0].orderid })
+                console.log('idObj', idObj)
+                const addToCart = await db.addToCart(newOrder[0].orderid, newOrder[0].orderid, req.body.productId, req.body.quantity)
             } else {
                 idObj = await Object.assign({}, order[0].orderid, { orderID: order[0].orderid })
                 const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.quantity)
@@ -71,7 +73,7 @@ module.exports = {
         db.getCartItems(req.params.id).then(cart => {
             console.log(cart)
             cart.map((val, i) => {
-                let priceInNum = parseFloat(val.price);
+                let priceInNum = parseFloat(val.price * val.quantity);
                 return cartTotal += priceInNum
             })
             console.log(cartTotal);
@@ -112,6 +114,8 @@ module.exports = {
             if (err) return res.sendStatus(500)
             return res.sendStatus(200);
         });
-        const dropOrder = db.detachOrderFromUser([req.body.orderId, req.body.userId])
+        const dropOrder = db.detachOrderFromUser([req.body.orderId, req.body.userId]).then(orderStatus => {
+            return res.send(orderStatus)
+        })
     }
 }
