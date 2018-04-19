@@ -15,6 +15,7 @@ class Cart extends Component {
         }
     }
     componentDidMount() {
+        console.log(this.props.orderId);
         axios.get(`/cart/${this.props.orderId}`).then(res => {
             console.log(res.data)
             let cartTotalObj = {

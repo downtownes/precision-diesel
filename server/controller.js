@@ -69,10 +69,12 @@ module.exports = {
         let cartTotal = 0;
 
         db.getCartItems(req.params.id).then(cart => {
+            console.log(cart)
             cart.map((val, i) => {
                 let priceInNum = parseFloat(val.price);
                 return cartTotal += priceInNum
             })
+            console.log(cartTotal);
             cartTotalString = cartTotal.toString().split('')
             indexOfDecimal = cartTotalString.indexOf('.');
             cartTotalString = cartTotalString.slice(0, indexOfDecimal + 3).join('');
@@ -98,6 +100,7 @@ module.exports = {
     },
 
     createPayment: async (req, res, next) => {
+        console.log(req.body);
         const db = req.app.get('db');
         const charge = await stripe.charges.create({
             amount: req.body.amount, // amount in cents, again

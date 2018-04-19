@@ -25,6 +25,8 @@ massive(CONNECTION_STRING).then(db => {
     app.set('db', db);
 })
 
+app.use( express.static( `${__dirname}/../build` ) );
+
 app.use(session({
     secret: SESSION_SECRET,
     resave: false,
@@ -79,8 +81,8 @@ app.post('/saveToken', controller.createPayment);
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/profile',
-    failureRedirect: 'http://localhost:3000/#/'
+    successRedirect: process.env.SUCCESS_REDIRECT,
+    failureRedirect: process.env.FAILURE_REDIRECT
 }))
 
 
@@ -88,7 +90,7 @@ app.get('/getUser', controller.getUser);
 
 app.get('/auth/logout', (req, res) => {
     req.logOut();
-    res.redirect('http://localhost:3005/');
+    res.redirect(process.env.LOGOUT_REDIRECT);
 })
 
 //----PART ENDPOINTS----//

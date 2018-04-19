@@ -39,7 +39,9 @@ class Profile extends Component {
                 if (this.props.loggedIn === true) {
                     axios.get(`/order/${this.props.userId}`).then(res => {
                         console.log(res.data)
+                        if(res.data.length > 0) {
                         this.props.getOrderId(res.data[0].orderid)
+                        }
                     })
                 }
             }
@@ -56,7 +58,7 @@ class Profile extends Component {
             return (
                 <div className="Profile">
                     <TestProfileComponent/>
-                    <a href="http://localhost:3000/auth/logout">
+                    <a href={process.env.REACT_APP_LOGOUT}>
                         <button onClick={() => this.resetId()}>Logout</button>
                     </a>
                 </div>
