@@ -38,6 +38,9 @@ class Parts extends Component {
         }
 
         document.getElementById(quant[1]).value = newQty;
+        this.setState({
+            quantity: newQty
+        })
         return newQty;
     }
 

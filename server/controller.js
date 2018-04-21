@@ -117,5 +117,13 @@ module.exports = {
         const dropOrder = db.detachOrderFromUser([req.body.orderId, req.body.userId]).then(orderStatus => {
             return res.send(orderStatus)
         })
+    },
+
+    getServices: (req, res, next) => {
+        const db = req.app.get('db');
+
+        db.getServices().then(services => {
+            res.status(200).send(services);
+        })
     }
 }

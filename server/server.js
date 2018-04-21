@@ -93,6 +93,9 @@ app.get('/auth/logout', (req, res) => {
     res.redirect(process.env.LOGOUT_REDIRECT);
 })
 
+//----SERVICES ENDPOINTS----//
+app.get('/services', controller.getServices);
+
 //----PART ENDPOINTS----//
 app.get('/parts', controller.getParts);
 
