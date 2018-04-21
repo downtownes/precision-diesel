@@ -24,3 +24,46 @@
     min-height: 217px;
     max-height: 217px;
 }
+
+.quantityChanger {
+    width: 20px;
+    height: 16px;
+    color: white;
+    text-align: center;
+    margin: 2px;
+}
+
+.quantityContainer {
+    display: block;
+    float: right;
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.quantityChangerContainer {
+    max-width: 60px;
+    max-height: 40px;
+    // margin-right: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.quantityInputDisplayContainer {
+    display: block;
+    float: right;
+}
+
+.quantityInputDisplay {
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+}
+
+
+
+

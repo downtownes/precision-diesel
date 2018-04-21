@@ -29,9 +29,16 @@ class Parts extends Component {
     }
 
     updateQuantity(quant) {
-        this.setState({
-            quantity: quant
-        })
+        console.log(quant);
+        let qty = document.getElementById(quant[1]).value
+        console.log(qty);
+        let newQty = parseInt(qty, 10) + quant[0]
+        if (newQty < 0) {
+            newQty = 0;
+        }
+
+        document.getElementById(quant[1]).value = newQty;
+        return newQty;
     }
 
     async addToCart(prodid) {
@@ -54,30 +61,42 @@ class Parts extends Component {
 
     render() {
         let displayedParts = this.state.parts.map((val, i) => {
+
+            let name = val.productid
+            console.log(name)
             return (
                 <Card className="cardStyling" key={i}>
-                <Image className="cardImage" verticalAlign="middle"  src={val.prodimage} />
-                <Card.Content >
-                <Card.Header>
-                    {val.prodname}
-                </Card.Header>
-                <Card.Meta>
-                    <span className='date'>
-                    {val.prod}
-                    </span>
-                </Card.Meta>
-                <Card.Description>
-                    {val.proddesc}
-                </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                {/* <a>
+                    <Image className="cardImage" verticalAlign="middle" src={val.prodimage} />
+                    <Card.Content >
+                        <Card.Header>
+                            {val.prodname}
+                        </Card.Header>
+                        <Card.Meta>
+                            <span className='date'>
+                                {val.prod}
+                            </span>
+                        </Card.Meta>
+                        <Card.Description>
+                            {val.proddesc}
+                        </Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                        {/* <a>
                     <Icon name='user' />
                     22 Friends
                 </a> */}
-                    <button style={{color: 'white'}}onClick={() => this.addToCart(val.productid)}>Add To Cart</button>
-                </Card.Content>
-            </Card>
+                        <button style={{ color: 'white' }} onClick={() => this.addToCart(val.productid)}>Add To Cart</button>
+                        <div className="quantityContainer">
+                            <div className="quantityChangerContainer">
+                            <div className="buttonsContainer">
+                                <button className="quantityChanger" id="up" onClick={() => { this.updateQuantity([1, name]) }}>+</button>
+                                <button className="quantityChanger" id="down" onClick={() => { this.updateQuantity([-1, name]) }}>-</button>
+                            </div>
+                                <input className="quantityInputDisplay" id={val.productid} value="0" />
+                            </div>
+                        </div>
+                    </Card.Content>
+                </Card>
             )
         })
         if (this.props.loggedIn === '' || this.props.loggedIn === true) {
@@ -85,14 +104,14 @@ class Parts extends Component {
                 <div className="Parts">
                     {/* <NavBar /> */}
                     <div className="cardContainer">
-                    {displayedParts}
+                        {displayedParts}
                     </div>
                 </div>
             )
-        } else if(this.props.loggedIn === false) {
+        } else if (this.props.loggedIn === false) {
             return (
                 <div className="Parts">
-                    <NotLoggedIn/>
+                    <NotLoggedIn />
                 </div>
             )
         }
