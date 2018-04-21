@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS parts (
     prodImage TEXT,
     prodName TEXT,
     prodDesc TEXT,
-    price DECIMAL(5,2)
+    price DECIMAL(5,2),
+    category VARCHAR(20)
 )

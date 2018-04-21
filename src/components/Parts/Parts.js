@@ -55,8 +55,8 @@ class Parts extends Component {
     render() {
         let displayedParts = this.state.parts.map((val, i) => {
             return (
-                <Card key={i}>
-                <Image verticalAlign="middle" src={val.prodimage} />
+                <Card className="cardStyling" key={i}>
+                <Image className="cardImage" verticalAlign="middle"  src={val.prodimage} />
                 <Card.Content >
                 <Card.Header>
                     {val.prodname}
