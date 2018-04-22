@@ -17,7 +17,7 @@ class Parts extends Component {
             total: 0,
         }
         this.updateQuantity = this.updateQuantity.bind(this);
-        this.updateQuantityOnState = this.updateQuantityOnState.bind(this);
+        // this.updateQuantityOnState = this.updateQuantityOnState.bind(this);
     }
 
     componentDidMount() {
@@ -40,17 +40,16 @@ class Parts extends Component {
             newQty = 0;
         }
 
-        // this.updateQuantityOnState(newQty)
         document.getElementById(quant[1]).value = newQty;
         console.log('mod newQty', newQty);
         return newQty;
     }
 
-    updateQuantityOnState(quant) {
-        this.setState({
-            quantity: quant
-        })
-    }
+    // updateQuantityOnState(quant) {
+    //     this.setState({
+    //         quantity: quant
+    //     })
+    // }
 
     async addToCart(prodid) {
         let loggingUser = await axios.get('/getUser').then(res => {
