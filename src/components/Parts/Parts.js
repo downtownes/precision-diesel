@@ -30,18 +30,21 @@ class Parts extends Component {
 
     updateQuantity(quant) {
         console.log(quant);
+        console.log('this.input', this.input);
         let qty = document.getElementById(quant[1]).value
         console.log(qty);
         let newQty = parseInt(qty, 10) + quant[0]
+        console.log('newQty', newQty)
         if (newQty < 0) {
             newQty = 0;
         }
 
         document.getElementById(quant[1]).value = newQty;
+        console.log('mod newQty', newQty);
+        return newQty;
         this.setState({
             quantity: newQty
         })
-        return newQty;
     }
 
     async addToCart(prodid) {
@@ -95,7 +98,9 @@ class Parts extends Component {
                                 <button className="quantityChanger" id="up" onClick={() => { this.updateQuantity([1, name]) }}>+</button>
                                 <button className="quantityChanger" id="down" onClick={() => { this.updateQuantity([-1, name]) }}>-</button>
                             </div>
-                                <input className="quantityInputDisplay" id={val.productid} value="0" />
+                                <input className="quantityInputDisplay" id={val.productid} ref={val.productid = () => {
+                                    this.input = val.productid
+                                }} value="0" />
                             </div>
                         </div>
                     </Card.Content>
