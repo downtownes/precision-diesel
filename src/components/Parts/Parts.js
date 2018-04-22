@@ -45,11 +45,11 @@ class Parts extends Component {
         return newQty;
     }
 
-    // updateQuantityOnState(quant) {
-    //     this.setState({
-    //         quantity: quant
-    //     })
-    // }
+    updateQuantityOnState(quant) {
+        this.setState({
+            quantity: quant
+        })
+    }
 
     async addToCart(prodid) {
         let loggingUser = await axios.get('/getUser').then(res => {
@@ -102,7 +102,7 @@ class Parts extends Component {
                                 <button className="quantityChanger" id="up" onClick={() => { this.updateQuantity([1, name]) }}>+</button>
                                 <button className="quantityChanger" id="down" onClick={() => { this.updateQuantity([-1, name]) }}>-</button>
                             </div>
-                                <input className="quantityInputDisplay" id={val.productid} ref={val.productid = () => {
+                                <input className="quantityInputDisplay" onChange={(e) => this.updateQuantityOnState(e.target.value)} id={val.productid} ref={val.productid = () => {
                                     this.input = val.productid
                                 }} value="0" />
                             </div>

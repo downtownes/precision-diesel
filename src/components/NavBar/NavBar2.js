@@ -12,7 +12,7 @@ class NavBar3 extends Component {
     const { activeItem } = this.state
 
     return (
-      <Menu size='massive'>
+      <Menu size='massive' className="newNav">
         <Menu.Item as={Link} to="/" name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
         <Menu.Item as={Link} to="/services" name='services' active={activeItem === 'services'} onClick={this.handleItemClick} />
         <Menu.Item as={Link} to="/parts" name='parts' active={activeItem === 'parts'} onClick={this.handleItemClick} />
