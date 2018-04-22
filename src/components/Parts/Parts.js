@@ -40,9 +40,9 @@ class Parts extends Component {
             newQty = 0;
         }
 
+        // this.updateQuantityOnState(newQty)
         document.getElementById(quant[1]).value = newQty;
         console.log('mod newQty', newQty);
-        this.updateQuantityOnState(newQty)
         return newQty;
     }
 
