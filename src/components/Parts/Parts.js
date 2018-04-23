@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUserId, getOrderId, loggedUser } from '../../ducks/reducer';
 import { Card, Icon, Image, Button } from 'semantic-ui-react';
-import NumericInput from 'react-numeric-input';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import NotLoggedIn from '../NotLoggedIn/NotLoggedIn';
