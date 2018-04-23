@@ -6,7 +6,7 @@ const NotLoggedIn = () => (
   <Message warning>
     <Message.Header>Please create an account or log in!</Message.Header>
     <a href={process.env.REACT_APP_LOGIN}>
-    <button style={{marginTop: 20, color: 'white'}}>Register/Login</button>
+      <button style={{ marginTop: 20, color: 'white' }}>Register/Login</button>
     </a>
   </Message>
 )
