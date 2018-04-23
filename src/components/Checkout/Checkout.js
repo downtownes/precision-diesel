@@ -16,7 +16,7 @@ class TakeMoney extends Component {
         token.card = void 0;
         axios.post('/saveToken', { token, amount: this.props.totalInCents, userId, orderId }).then(res => {
             console.log(res.data);
-            alert(`We are in business, ${this.props.firstname}`);
+            alert(`We are in business, ${this.props.fName}`);
             this.props.getCart([]);
             this.props.updateCartTotal(0);
         });
@@ -41,13 +41,14 @@ class TakeMoney extends Component {
 }
 
 function mapStateToProps(state) {
-    const { totalInCents, userId, orderId, cart } = state;
+    const { totalInCents, userId, orderId, cart, fName } = state;
 
     return {
         totalInCents,
         userId,
         orderId,
-        cart
+        cart,
+        fName
     }
 }
 export default connect(mapStateToProps, { getCart, updateCartTotal })(TakeMoney)
