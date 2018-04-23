@@ -9,7 +9,7 @@ const initialState = {
     zip: 0,
     orderId: 0,
     totalInCents: 0,
-    loggedIn: '',
+    loggedIn: true,
     cart: [],
     total: 0,
     quantity: 0
