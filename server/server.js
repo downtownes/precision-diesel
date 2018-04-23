@@ -73,11 +73,6 @@ passport.deserializeUser((id, done) => {
 })
 
 
-//----STRIPE SETUP POINT----//
-app.post('/saveToken', controller.createPayment);
-
-
-
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
@@ -93,6 +88,10 @@ app.get('/auth/logout', (req, res) => {
     res.redirect(process.env.LOGOUT_REDIRECT);
 })
 
+
+//----STRIPE SETUP POINT----//
+app.post('/saveToken', controller.createPayment);
+
 //----SERVICES ENDPOINTS----//
 app.get('/services', controller.getServices);
 
@@ -105,5 +104,8 @@ app.get('/order/:id', controller.getOrder);
 app.get('/cart/:id', controller.getCartItems);
 app.post('/cartItem', controller.deleteFromCart);
 app.patch('/total', controller.updateTotal);
+
+//----USER ENDPOINTS----//
+app.put('/profile', controller.updateProfile);
 
 app.listen(port, () => {console.log(`Listening on port: ${port}`)});

@@ -125,5 +125,14 @@ module.exports = {
         db.getServices().then(services => {
             res.status(200).send(services);
         })
+    },
+
+    updateProfile: (req, res, next) => {
+        const db = req.app.get('db');
+        const {id, first, last, phone, address, city, state, zip} = req.body;
+
+        db.updateProfile([id, first, last, phone, address, city, state, zip]).then(profile => {
+            res.status(200).send(profile);
+        })
     }
 }
