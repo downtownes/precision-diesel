@@ -30,7 +30,7 @@ class Services extends Component {
                     <Image className="cardImage" src={val.servimage} />
                     <Card.Content>
                         <Card.Header>
-                            {val.servname}
+                            {val.servname} <p style={{ color: "red", fontSize: "14px", marginTop: "10px" }}>${val.price}</p>
                         </Card.Header>
                         <Card.Meta>
                             <span className='date'>

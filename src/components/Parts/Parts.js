@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUserId, getOrderId, loggedUser } from '../../ducks/reducer';
-import { Card, Icon, Image, Button } from 'semantic-ui-react';
+import { getUserId, getOrderId, loggedUser, updateQuant } from '../../ducks/reducer';
+import { Card, Icon, Image, Button, Popup } from 'semantic-ui-react';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import NotLoggedIn from '../NotLoggedIn/NotLoggedIn';
@@ -15,8 +15,11 @@ class Parts extends Component {
             parts: [],
             quantity: 0,
             total: 0,
+            updatedQty: 0,
+            updateBool: false,
+            inputName: ''
         }
-        this.updateQuantity = this.updateQuantity.bind(this);
+        // this.updateQuantity = this.updateQuantity.bind(this);
         this.updateQuantityOnState = this.updateQuantityOnState.bind(this);
     }
 
@@ -29,30 +32,19 @@ class Parts extends Component {
         })
     }
 
-    updateQuantity(quant) {
-        console.log('this.input', this.input);
-        if (quant.length === 2) {
-            let qty = document.getElementById(quant[1]).value
-            console.log(qty);
-            let newQty = parseInt(qty, 10) + quant[0]
-            console.log('newQty', newQty)
-            if (newQty < 0) {
-                newQty = 0;
-            }
+    // updateQuantity(quant) {
+    //     console.log('this.input', this.input);
+    //     this.setState({
 
-            document.getElementById(quant[1]).value = newQty;
-            this.updateQuantityOnState(newQty);
-            console.log('mod newQty', newQty);
-            return newQty;
-        } else {
-            null
-        }
-    }
+    //     })
+    // }
 
     updateQuantityOnState(quant) {
+        console.log(quant);
         this.setState({
-            quantity: quant
+            inputName: quant[1],
         })
+        this.props.updateQuant(quant[0])
     }
 
     async addToCart(prodid) {
@@ -65,7 +57,7 @@ class Parts extends Component {
         let orderInfo = {
             id: this.props.userId,
             productId: prodid,
-            quantity: this.state.quantity
+            quantity: this.props.quantity
         }
         axios.post('/order', orderInfo).then(res => {
             this.props.getOrderId(res.data.orderID);
@@ -80,7 +72,7 @@ class Parts extends Component {
                     <Image className="cardImage" verticalAlign="middle" src={val.prodimage} />
                     <Card.Content >
                         <Card.Header>
-                            {val.prodname}
+                            {val.prodname} <p style={{ color: "red", fontSize: "14px", marginTop: "10px" }}>${val.price}</p>
                         </Card.Header>
                         <Card.Meta>
                             <span className='date'>
@@ -92,21 +84,16 @@ class Parts extends Component {
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
-                        {/* <a>
-                    <Icon name='user' />
-                    22 Friends
-                </a> */}
-                        <button style={{ color: 'white' }} onClick={() => this.addToCart(val.productid)}>Add To Cart</button>
+                        <Popup
+                            trigger={<button style={{ color: 'white' }} onClick={() => this.addToCart(val.productid)}>Add To Cart</button>}
+                            content='Added to cart!'
+                            on='click'
+                            hideOnScroll
+                        />
+                        {/* <button style={{ color: 'white' }} onClick={() => this.addToCart(val.productid)}>Add To Cart</button> */}
                         <div className="quantityContainer">
                             <div className="quantityChangerContainer">
-                                {/* <div className="buttonsContainer">
-                                    <button className="quantityChanger" id="up" onClick={() => { this.updateQuantity([1, val.productid]) }}>+</button>
-                                    <button className="quantityChanger" id="down" onClick={() => { this.updateQuantity([-1, val.productid]) }}>-</button>
-                                </div>
-                                <input className="quantityInputDisplay" id={val.productid} ref={val.productid = () => {
-                                    this.input = val.productid
-                                }} value="0" /> */}
-                                <input type="number" className="quantityInputDisplay" value={''} onChange={ e => {this.updateQuantityOnState(e.target.value)}}/>
+                                <input type="number" name={this.state.inputName} className="quantityInputDisplay" value={this.state.inputName != val.prodname ? this.state.quantity : this.props.quantity} onChange={e => { this.updateQuantityOnState([e.target.value, val.prodname]) }} />
                             </div>
                         </div>
                     </Card.Content>
@@ -137,11 +124,12 @@ class Parts extends Component {
 
 
 function mapStateToProps(state) {
-    const { userId, orderId, loggedIn } = state;
+    const { userId, orderId, loggedIn, quantity } = state;
     return {
         userId,
         orderId,
-        loggedIn
+        loggedIn,
+        quantity
     }
 }
-export default connect(mapStateToProps, { getUserId, getOrderId, loggedUser })(Parts);
+export default connect(mapStateToProps, { getUserId, getOrderId, loggedUser, updateQuant })(Parts);

@@ -59,7 +59,7 @@ class Profile extends Component {
                 <div className="Profile">
                     <TestProfileComponent/>
                     <a href={process.env.REACT_APP_LOGOUT}>
-                        <button onClick={() => this.resetId()}>Logout</button>
+                        <button className="logoutButton" onClick={() => this.resetId()}>Logout</button>
                     </a>
                 </div>
             )

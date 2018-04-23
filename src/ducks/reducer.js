@@ -11,7 +11,8 @@ const initialState = {
     totalInCents: 0,
     loggedIn: '',
     cart: [],
-    total: 0
+    total: 0,
+    quantity: 0
 }
 
 const USERID = "USERID";
@@ -27,6 +28,7 @@ const TOTALINCENTS = "TOTALINCENTS";
 const LOGGEDIN = "LOGGEDIN";
 const CART = "CART";
 const CARTTOTAL = "CARTTOTAL"
+const QUANTITY = "QUANTITY"
 
 export default function(state = initialState, action){
     switch(action.type) {
@@ -41,7 +43,7 @@ export default function(state = initialState, action){
         case ADDRESS: 
             return Object.assign({}, state, {city: action.payload});
         case CITY: 
-            return Object.assign({}, state, {city: action.payload});
+            return Object.assign({}, state, {address: action.payload});
         case STATE: 
             return Object.assign({}, state, {stateLived: action.payload});
         case ZIP: 
@@ -55,7 +57,9 @@ export default function(state = initialState, action){
         case CART: 
             return Object.assign({}, state, {cart: action.payload});
         case CARTTOTAL: 
-            return Object.assign({}, state, {total: action.payload})
+            return Object.assign({}, state, {total: action.payload});
+        case QUANTITY:
+            return Object.assign({}, state, {quantity: action.payload})
         default:
             return state;
     }
@@ -149,5 +153,12 @@ export function updateCartTotal(total) {
     return {
         type: CARTTOTAL,
         payload: total
+    }
+}
+
+export function updateQuant(quantity) {
+    return {
+        type: QUANTITY,
+        payload: quantity
     }
 }

@@ -46,8 +46,8 @@ class AccountInfo extends Component {
             this.setState({
                 edit: false
             })
-                this.props.firstName(this.state.firstname);
-                this.props.lastName(this.state.lastname);
+                this.props.firstName(this.state.firstName);
+                this.props.lastName(this.state.lastName);
                 this.props.phoneNumber(this.state.phone);
                 this.props.location(this.state.address);
                 this.props.cityLoc(this.state.cityLoc);

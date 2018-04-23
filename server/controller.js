@@ -109,12 +109,9 @@ module.exports = {
             currency: 'usd',
             source: req.body.token.id,
             description: 'Test charge from react app'
-        }, function (err, charge) {
-            console.log(err);
-            if (err) return res.sendStatus(500)
-            return res.sendStatus(200);
-        });
+        })
         const dropOrder = db.detachOrderFromUser([req.body.orderId, req.body.userId]).then(orderStatus => {
+            console.log(orderStatus)
             return res.send(orderStatus)
         })
     },
