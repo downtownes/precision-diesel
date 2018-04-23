@@ -29,7 +29,7 @@ export default class NewProfile extends Component{
                     <Menu fluid vertical tabular>
                         <Menu.Item name="Account Information"active={activeItem === 'Account Information'} onClick={this.changeView} />
                         <Menu.Item name="Cart" active={activeItem === 'Cart'} onClick={this.changeView} />
-                        <Menu.Item name="Order History" active={activeItem === 'Order History'} onClick={this.changeView} />
+                        {/* <Menu.Item name="Order History" active={activeItem === 'Order History'} onClick={this.changeView} /> */}
                     </Menu>
                 </Grid.Column>
                 <Grid.Column stretched width={12}>
