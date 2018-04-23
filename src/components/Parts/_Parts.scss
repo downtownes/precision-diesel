@@ -50,7 +50,7 @@
     max-height: 40px;
     // margin-right: 20px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -61,11 +61,14 @@
 }
 
 .quantityInputDisplay {
-    width: 15px;
-    height: 15px;
-    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #3271BD;
 }
 
-
-
-
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+   opacity: 1;
+   height: 40px;
+}

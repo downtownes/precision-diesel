@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUserId, getOrderId, loggedUser } from '../../ducks/reducer';
 import { Card, Icon, Image, Button } from 'semantic-ui-react';
+import NumericInput from 'react-numeric-input';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import NotLoggedIn from '../NotLoggedIn/NotLoggedIn';
@@ -17,7 +18,7 @@ class Parts extends Component {
             total: 0,
         }
         this.updateQuantity = this.updateQuantity.bind(this);
-        // this.updateQuantityOnState = this.updateQuantityOnState.bind(this);
+        this.updateQuantityOnState = this.updateQuantityOnState.bind(this);
     }
 
     componentDidMount() {
@@ -30,19 +31,23 @@ class Parts extends Component {
     }
 
     updateQuantity(quant) {
-        console.log(quant);
         console.log('this.input', this.input);
-        let qty = document.getElementById(quant[1]).value
-        console.log(qty);
-        let newQty = parseInt(qty, 10) + quant[0]
-        console.log('newQty', newQty)
-        if (newQty < 0) {
-            newQty = 0;
-        }
+        if (quant.length === 2) {
+            let qty = document.getElementById(quant[1]).value
+            console.log(qty);
+            let newQty = parseInt(qty, 10) + quant[0]
+            console.log('newQty', newQty)
+            if (newQty < 0) {
+                newQty = 0;
+            }
 
-        document.getElementById(quant[1]).value = newQty;
-        console.log('mod newQty', newQty);
-        return newQty;
+            document.getElementById(quant[1]).value = newQty;
+            this.updateQuantityOnState(newQty);
+            console.log('mod newQty', newQty);
+            return newQty;
+        } else {
+            null
+        }
     }
 
     updateQuantityOnState(quant) {
@@ -65,15 +70,12 @@ class Parts extends Component {
         }
         axios.post('/order', orderInfo).then(res => {
             this.props.getOrderId(res.data.orderID);
-            this.updateQuantity(0);
+            this.updateQuantityOnState(0);
         });
     }
 
     render() {
         let displayedParts = this.state.parts.map((val, i) => {
-
-            let name = val.productid
-            console.log(name)
             return (
                 <Card className="cardStyling" key={i}>
                     <Image className="cardImage" verticalAlign="middle" src={val.prodimage} />
@@ -98,13 +100,14 @@ class Parts extends Component {
                         <button style={{ color: 'white' }} onClick={() => this.addToCart(val.productid)}>Add To Cart</button>
                         <div className="quantityContainer">
                             <div className="quantityChangerContainer">
-                            <div className="buttonsContainer">
-                                <button className="quantityChanger" id="up" onClick={() => { this.updateQuantity([1, name]) }}>+</button>
-                                <button className="quantityChanger" id="down" onClick={() => { this.updateQuantity([-1, name]) }}>-</button>
-                            </div>
-                                <input className="quantityInputDisplay" onChange={(e) => this.updateQuantityOnState(e.target.value)} id={val.productid} ref={val.productid = () => {
+                                {/* <div className="buttonsContainer">
+                                    <button className="quantityChanger" id="up" onClick={() => { this.updateQuantity([1, val.productid]) }}>+</button>
+                                    <button className="quantityChanger" id="down" onClick={() => { this.updateQuantity([-1, val.productid]) }}>-</button>
+                                </div>
+                                <input className="quantityInputDisplay" id={val.productid} ref={val.productid = () => {
                                     this.input = val.productid
-                                }} value="0" />
+                                }} value="0" /> */}
+                                <input type="number" className="quantityInputDisplay" value={''} onChange={ e => {this.updateQuantityOnState(e.target.value)}}/>
                             </div>
                         </div>
                     </Card.Content>
