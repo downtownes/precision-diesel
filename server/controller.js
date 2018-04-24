@@ -87,11 +87,21 @@ module.exports = {
         })
     },
 
+    // deleteFromCart: (req, res, next) => {
+    //     const db = req.app.get('db');
+
+    //     db.deleteFromCart([req.body.prodid, req.body.ordid]).then(newList => {
+    //         res.status(200).send(newList);
+    //     })
+    // },
+
     deleteFromCart: (req, res, next) => {
         const db = req.app.get('db');
+        console.log('req.query', req.query);
+        console.log('req.params', req.params)
 
-        db.deleteFromCart([req.body.prodid, req.body.ordid]).then(newList => {
-            res.status(200).send(newList);
+        db.deleteFromCart([req.params.id, req.query.orderid]).then(newList => {
+            res.status(200).send(newList)
         })
     },
 

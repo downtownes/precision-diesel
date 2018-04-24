@@ -102,7 +102,8 @@ app.get('/parts', controller.getParts);
 app.post('/order', controller.addCart);
 app.get('/order/:id', controller.getOrder);
 app.get('/cart/:id', controller.getCartItems);
-app.post('/cartItem', controller.deleteFromCart);
+// app.post('/cartItem', controller.deleteFromCart);
+app.delete('/cartItem/:id', controller.deleteFromCart);
 app.patch('/total', controller.updateTotal);
 
 //----USER ENDPOINTS----//

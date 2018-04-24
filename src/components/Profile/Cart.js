@@ -36,17 +36,23 @@ class Cart extends Component {
             prodid: productid,
             ordid: this.props.orderId
         }
-        axios.post(`/cartItem`, product).then(res => {
+        // axios.post(`/cartItem`, product).then(res => {
+        //     axios.get(`/cart/${this.props.orderId}`).then(res => {
+        //         console.log(res.data)
+        //         this.props.getCart(res.data[0])
+        //         this.props.updateCartTotal(res.data[1])
+        //     })
+        // })
+        axios.delete(`/cartItem/${productid}?orderid=${this.props.orderId}`).then(res => {
             axios.get(`/cart/${this.props.orderId}`).then(res => {
-                console.log(res.data)
-                this.props.getCart(res.data[0])
+                this.props.getCart(res.data[0]);
                 this.props.updateCartTotal(res.data[1])
             })
         })
     }
 
 
-    render() {
+    render(){
         let cartItemCards = this.props.cart.map((val, i) => {
             return (
                 <div key={i} className="itemContainer">
@@ -66,7 +72,7 @@ class Cart extends Component {
                 <div>
                     <h2 className="totalPrice">{`$${this.props.total}`}</h2>
                     {/* <button className="checkoutButton">Checkout</button> */}
-                    <Checkout/>
+                    <Checkout />
                 </div>
             </div>
         )

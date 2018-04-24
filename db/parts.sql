@@ -2,7 +2,7 @@
 
 INSERT INTO parts
 (prodName, prodImage, prodDesc, price)
-VALUES('Diesel Right Brake Pads', 'https://www.ryderfleetproducts.com/images/nprod/r63918310.jpg', 'Lorem ipsum dolor sit amet, alterum percipit mea ex, dolore facilis ei mel, tota aperiam in nec. Te cum praesent.', 80.27);
+VALUES('Diesel Right Brake Pads', 'https://dgzmd7u6z2by7.cloudfront.net/partimage/BPS/1ABPS00101/1790fecf9b964beb821860c1c6922235_490.jpg', 'Lorem ipsum dolor sit amet, alterum percipit mea ex, dolore facilis ei mel, tota aperiam in nec. Te cum praesent.', 80.27);
 
 -- HEADLIGHTS --
 
