@@ -53,10 +53,13 @@ class Parts extends Component {
             if (res.data === 'Please log in or create an account') {
                 this.props.loggedUser(false);
             }
+            console.log(prodid)
         })
         let orderInfo = {
             id: this.props.userId,
             productId: prodid,
+//-----THIS WILL BE THE DIFFERENCE BETWEEN PARTS AND SERVICES-----//
+            // subId: '',
             quantity: this.props.quantity
         }
         axios.post('/order', orderInfo).then(res => {

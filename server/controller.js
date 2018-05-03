@@ -45,10 +45,10 @@ module.exports = {
                 console.log('newOrder', newOrder)
                 idObj = await Object.assign({}, newOrder[0].orderid, { orderID: newOrder[0].orderid })
                 console.log('idObj', idObj)
-                const addToCart = await db.addToCart(newOrder[0].orderid, newOrder[0].orderid, req.body.productId, req.body.quantity)
+                const addToCart = await db.addToCart(newOrder[0].orderid, newOrder[0].orderid, req.body.productId, req.body.subId, req.body.quantity)
             } else {
                 idObj = await Object.assign({}, order[0].orderid, { orderID: order[0].orderid })
-                const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.quantity)
+                const addToCart = await db.addToCart(order[0].orderid, order[0].orderid, req.body.productId, req.body.subId, req.body.quantity)
             }
             res.send(idObj)
         } catch (err) {
@@ -87,13 +87,6 @@ module.exports = {
         })
     },
 
-    // deleteFromCart: (req, res, next) => {
-    //     const db = req.app.get('db');
-
-    //     db.deleteFromCart([req.body.prodid, req.body.ordid]).then(newList => {
-    //         res.status(200).send(newList);
-    //     })
-    // },
 
     deleteFromCart: (req, res, next) => {
         const db = req.app.get('db');
